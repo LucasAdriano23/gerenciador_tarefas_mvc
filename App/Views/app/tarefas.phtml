@@ -94,7 +94,7 @@ if(count($this->view->tarefas) > 0){
       <td><?=$tarefa['responsavel']?></td>
       <td><?=$tarefa['descricao']?></td>
       <td><?=valida_status($tarefa['status'])?></td>
-      <td><?=date('d/m/Y',strtotime($tarefa['data_inicio']))?></td>
+      <td><?=($tarefa['data_inicio'] !='0000-00-00') ? date('d/m/Y',strtotime($tarefa['data_inicio'])) :''?></td>
       <td><?=($tarefa['data_conclusao'] !='0000-00-00') ? date('d/m/Y',strtotime($tarefa['data_conclusao'])) :''?></td>
       <td>
         <a href="/alterar_tarefa?id=<?=$tarefa['id']?>" title="Alterar"><i class="far fa-edit"></i></a>
