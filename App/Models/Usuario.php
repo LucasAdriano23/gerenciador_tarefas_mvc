@@ -19,7 +19,7 @@ class Usuario extends Model {
     }
 
     public function salvar_usuario(){
-        $sql = "INSERT INTO tb_usuarios(nome, email, senha, status,data_cadastro) VALUES(:nome, :email, :senha,'1',CURDATE())";
+        $sql = "INSERT INTO tb_usuarios(nome, email, senha,data_cadastro) VALUES(:nome, :email, :senha, CURDATE())";
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(':nome',$this->__get('nome'));
