@@ -1,0 +1,125 @@
+<?php
+function valida_status($status){
+  if($status =='1'){
+    return 'Aberto';
+  }else if($status =='2'){
+    return 'Em andamento';
+  }else if($status =='3'){
+    return 'Concluído';
+  }
+}
+
+function valida_tipo($tipo){
+  if($tipo =='1'){
+    return 'TAREFA';
+  }else if($tipo =='2'){
+    return 'REUNIÃO';
+  }else if($tipo =='3'){
+    return 'VIAGEM';
+  }
+}
+?>
+
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Gerenciador de Tarefas</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <p>Olá, <?=$_SESSION['nome']?></p>
+
+      <li>
+        <a href="/tarefas">Lista de Tarefas</a>
+      </li>
+
+      <li>
+        <a href="/sair">Sair</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Page Content  -->
+  <div id="content" style="padding-top:15px;margin-top:15px">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <i class="fas fa-align-left"></i>
+          <span>Menu</span>
+        </button>
+        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="fas fa-align-justify"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        </div>
+      </div>
+    </nav>
+
+    <div class="content" style="padding-top:15px;margin-top:0px">
+      
+    <div class="row" style="padding-bottom:15px">
+    <div class="col text-left">
+        <button class="btn btn-default"  style="text-align:left"><a href="/cadastrar_tarefa">Nova tarefa</a></button>
+    </div>
+  </div>
+  <table class="table">
+    
+    <thead>
+      
+      <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Responsável</th>
+        <th>Descrição</th>
+        <th>Status</th>
+        <th>Data Início</th>
+        <th>Data Conclusão</th>
+        <th>Ações</th>
+      </tr>
+      
+    </thead>
+    
+    <tbody>
+<?php 
+if(count($this->view->tarefas) > 0){
+  foreach($this->view->tarefas as $id_tarefa => $tarefa){?>
+    <tr>
+      <td><?=$tarefa['id']?></td>
+      <td><?=valida_tipo($tarefa['tipo'])?></td>
+      <td><?=$tarefa['responsavel']?></td>
+      <td><?=$tarefa['descricao']?></td>
+      <td><?=valida_status($tarefa['status'])?></td>
+      <td><?=date('d/m/Y',strtotime($tarefa['data_inicio']))?></td>
+      <td><?=($tarefa['data_conclusao'] !='0000-00-00') ? date('d/m/Y',strtotime($tarefa['data_conclusao'])) :''?></td>
+      <td>
+        <a href="/alterar_tarefa?id=<?=$tarefa['id']?>" title="Alterar"><i class="far fa-edit"></i></a>
+        <a href="/excluir_tarefa?id=<?=$tarefa['id']?>" title="excluir"><i class="far fa-trash-alt"></i></a>
+      </td>
+    </tr>
+    <?php }
+  }?>
+
+ </tbody>
+</table>
+<?php 
+if(count($this->view->tarefas) == 0){ ?>
+  <p class="text-center">Nenhum registro encontrado.</p>
+<?php }?>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+    });
+  });
+</script>

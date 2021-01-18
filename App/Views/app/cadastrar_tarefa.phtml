@@ -1,0 +1,112 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Gerenciador de Tarefas</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Olá, <?=$_SESSION['nome']?></p>
+
+            <li>
+                <a href="/tarefas">Lista de Tarefas</a>
+            </li>
+
+            <li>
+                <a href="/sair">Sair</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" style="padding-top:15px;margin-top:15px">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Menu</span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                </div>
+            </div>
+        </nav>
+
+        <div class="content" style="padding-top:15px;margin-top:0px">
+
+            <form action="/cadastro_tarefa" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição...">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="inputState">Tipo</label>
+                        <select id="tipo" name="tipo" class="form-control">
+                            <option value="">Selecione o tipo</option>
+                            <option value="1">TAREFA</option>
+                            <option value="2">REUNIÃO</option>
+                            <option value="3">VIAGEM</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="">Selecione o status</option>
+                            <option value="1">Aberto</option>
+                            <option value="2">Em Andamento</option>
+                            <option value="3">Concluído</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="data_inicio">Data Início</label>
+                        <input type="text" id="data_inicio" name="data_inicio" class="form-control" maxlength="10" OnKeyPress="formatar_data('##/##/####', this)" id="data_inicio" placeholder="___/__/___">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="data_conclusao">Data Conclusão</label>
+                        <input type="text" id="data_conclusao" name="data_conclusao" class="form-control" maxlength="10" OnKeyPress="formatar_data('##/##/####', this)" id="data_conclusao" placeholder="___/__/___">
+                    </div>
+
+
+                </div>
+
+                <button class="btn btn-success" type="submit">Cadastrar</button>
+                <a class="btn btn-danger" href="/tarefas">Cancelar</a>
+            </form>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        function formatar_data(mascara, documento){
+        var i = documento.value.length;
+        var saida = mascara.substring(0,1);
+        var texto = mascara.substring(i);
+        
+        if (texto.substring(0,1) != saida){
+                    documento.value += texto.substring(0,1);
+        }
+        
+        }
+
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
